@@ -1,5 +1,5 @@
 ---
-title: Women in Parliament -- tidyverse
+title: Women in Parliament -- Tidyverse Edition
 
 # Use letters for affiliations
 author: 
