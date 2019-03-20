@@ -26,7 +26,7 @@ guide.
 
 ## Repository Annoucement, etc.
 
-* *[To do] Insert Twitter link here.*
+* https://twitter.com/ilustat/status/1108393635446435842
 
 ## Acknowledgements
 
