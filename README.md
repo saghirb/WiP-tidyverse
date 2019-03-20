@@ -2,7 +2,7 @@
 
 ## Women in Parliament: R `tidyverse` Case Study
 
-A [six page guide](https://github.com/saghirb/WiP-tidyverse/blob/master/doc/WiP-tidyverse.pdf) 
+A [six (and a bit) page guide](https://github.com/saghirb/WiP-tidyverse/blob/master/doc/WiP-tidyverse.pdf) 
 presenting a [`tidyverse`](https://www.tidyverse.org/) case study using the [World Bank's](https://www.worldbank.org/) 
 ["Women in Parliament"](https://data.worldbank.org/indicator/SG.GEN.PARL.ZS) data.
 
@@ -20,7 +20,8 @@ presenting a [`tidyverse`](https://www.tidyverse.org/) case study using the [Wor
 
 You should be familiar with the `dplyr`, `tidyr` and `ggplot2` packages.
 
-- [Getting Started in R - Tidyverse Edition](https://github.com/saghirb/Getting-Started-in-R)
+- See our [Getting Started in R - Tidyverse Edition](https://github.com/saghirb/Getting-Started-in-R)
+guide.
 - [ggplot2](https://ggplot2.tidyverse.org/)
 
 ## Repository Annoucement, etc.
