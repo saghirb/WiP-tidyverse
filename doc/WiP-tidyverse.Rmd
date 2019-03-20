@@ -118,7 +118,7 @@ update_geom_defaults("boxplot", list(outlier.size = 0.5))
 
 # Preface
 
-We present a real-life case study for the data.table[^dtref] package using the 
+We present a real-life case study for some of the `tidyverse`[^tvref]  package using the 
 World Bank’s “Women in Parliament” indicator data. To get the most out of this 
 case-study guide, repeat the examples and do the exercises whilst reading it.
 
@@ -209,7 +209,7 @@ Always keep a backup copy of the data. Alternatively, set the data file(s) to
 
 It is important to look at and understand the contents of the file before you start
 using it. Using a text editor or a spreadsheet software, open the `WB-WiP.csv` file
-(in the data directory). What do you observe in the contents of this file?
+(in the `data` directory). What do you observe in the contents of this file?
 
 ## Content and Structure
 
@@ -233,8 +233,8 @@ library(readr)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(gghighlight)
 ```
-
 
 # Importing the data
 
@@ -252,8 +252,8 @@ will come back to it below).
 ## Exercise
 
 Check what you have read by typing “`wip`” in the console window. What do you 
-observe? Type “`class(wip)`” and “`str(wip)`” to confirm that “`wip`” is of class 
-“`data.table`”. 
+observe? Type “`class(wip)`” and “`glimpse(wip)`” to confirm that “`wip`” is of class 
+“`tbl_df`”. 
 
 ## "Fix" column names
 
@@ -312,7 +312,7 @@ As there is only one indicator in this dataset we will remove these two columns.
 ## Exercise
 
 Confirm that both `Indicator.Name` and `Indicator.Code` have the same values for
-all observations. Hint: Use the approach above for variable ``r tail(names(wip), n=1)``
+all observations. Hint: Use either `count()` or `distinct()` functions.
 
 ## Removing columns
 
@@ -373,8 +373,9 @@ do the exercises.
 ## Time trends for Portugal
 
 First look at the raw data.
-```{r PTTable, echo=2}
-options(tibble.print_max = Inf)
+```{r PTTable}
+# Reset tibble print option to see more rows
+options(tibble.print_max = 25)
 WP %>% filter(Country=="Portugal")
 ```
 
@@ -392,8 +393,9 @@ WP %>%
 
 ### Interpretation
 
-In 1990 Portugal had 7.6% women in parliament, which increased to 34.8% in 2018. This
-still falls short of 50% (i.e. point of gender parity in parliament).
+In 1990 Portugal had 7.6% women in parliament (i.e. 12.2 men for each woman), which 
+increased to 34.8% (i.e. 1.87 men for each woman) in 2018. This still falls short 
+of 50% (i.e. point of gender parity in parliament).
 
 ## Exercise 
 
@@ -402,7 +404,7 @@ interpretation? How does it compare to Portugal?
 
 ## Portugal versus European Union (EU) countries
 
-We selected six EU countries for comparison (due to space limitations). It would 
+We selected six EU countries (due to space limitations) for comparison. It would 
 be better to compare all EU and/or all European countries.
 ```{r euPctPlot, fig.width=3.5, fig.height=3, cache=FALSE}
 WP %>%
@@ -502,7 +504,7 @@ cWP %>%
   group_by(Continent, Year) %>% 
   arrange(Continent, Year, -pctWiP) %>% 
   filter(row_number()==1) %>% 
-  select(Continent, Country, Year, pctWiP)
+  select(Continent, Country, Year, pctWiP, Ratio)
 ```
 
 ## Decline in percentage
@@ -576,14 +578,15 @@ cWPrankG <- cWP %>%
 ```{r globalRankPT , collapse=TRUE}
 cWPrankG %>% 
   filter(Country=="Portugal") %>% 
-  select(Country, Year, pctWiP, RankG, TotalG) %>% 
+  select(Country, Year, pctWiP, Ratio, RankG, 
+         TotalG) %>% 
   arrange(Year)
 ```
 
 ### Interpretation
 
 Portugal has generally been ranked in the first quartile (25%) of countries in 
-the world, with the fluctuations of its ranking subject to random variation. 
+the world, with the fluctuations of its ranking most likely due to random variation. 
 
 ## Exercise 
 
@@ -609,7 +612,8 @@ cWPx <- cWPrankG %>%
 cWPx %>% 
   ungroup() %>% 
   filter(Country=="Portugal") %>% 
-  select(Country, Year, pctWiP, RankC, TotalC) %>% 
+  select(Country, Year, pctWiP, Ratio, RankC, 
+         TotalC) %>% 
   arrange(Year)
 ```
 
@@ -639,7 +643,7 @@ A total of `r nrow(filter(cWPx, Continent=="Europe" & Year==1990))` European cou
 had data in 1990, `r nrow(filter(cWPx, Continent=="Europe" & Year==1997))` in 1997 
 and `r nrow(filter(cWPx, Continent=="Europe" & Year==2018))` in 2018. Within Europe, 
 Portugal was typically ranked in the second quartile (25-50%) with the fluctuations 
-of its ranking subject to random variation. 
+of its ranking most likely due to random variation.
 
 ## Exercise 
 
@@ -655,7 +659,7 @@ options(tibble.print.rownames=FALSE)
 cWPx %>% 
   filter(Year %in% c(1990, 2018) & RankC==1) %>% 
   arrange(Continent, Year) %>% 
-  select(Continent, Year, Country, pctWiP) 
+  select(Continent, Year, Country, pctWiP, Ratio) 
 options(tibble.print.rownames=TRUE)
 ```
 
@@ -665,7 +669,6 @@ What are the trends globally? There are various regions defined in the World Ban
 data. We can plot them and highlight the world "average".
 
 ```{r globalTrends, warning=FALSE, message=FALSE, fig.width=3, fig.height=2.5}
-library(gghighlight)
 cWP %>% 
   filter(is.na(Continent)) %>%
   ggplot(aes(Year, pctWiP, group=Country)) +
@@ -698,7 +701,7 @@ and potential impact of this data which the World Bank has nicely [summarised](h
 for a more complete understanding.
 
 
-[^dtref]: For more information on the `tidyverse` see https://www.tidyverse.org/.
+[^tvref]: For more information on the `tidyverse` see https://www.tidyverse.org/.
 [^wbstats]: The `wbstats` R package (https://cran.r-project.org/web/packages/wbstats/)
 gives access to a  "tidier" version of the World Bank indicator data.
 [^objNote]: The objective could be termed neutrally as "gender trends" but we will 
