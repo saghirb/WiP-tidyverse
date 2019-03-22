@@ -195,7 +195,7 @@ Understand the limitations of your data before anybody else points them out to y
 
 The data is stored in a file called:
 
-- `API_SG.GEN.PARL.ZS_DS2_en_csv_v2_10473744.csv`
+- ``r list.files(path = here("data"), pattern = "^API")``
 
 To simplify things we have copied it to `WB-WiP.csv` (which also allows us to 
 maintain the original file in case something goes wrong).
