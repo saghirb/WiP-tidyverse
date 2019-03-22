@@ -19,6 +19,9 @@ file.copy(here("data", WiPDataFile), here("data", "WB-WiP.csv"))
 # Render the guide and produce the zip file for distribution.
 rmarkdown::render(here("doc", "WiP-tidyverse.Rmd"))
 
+# Extract the R code from Rmd file
+knitr::purl(here("doc", "WiP-tidyverse.Rmd"), output=here("R", "WiP-tidyverse.R"))
+
 # Create zip files to share with participants
 # First empty the share folder and recreate the directory structure.
 unlink(here("Share/"), recursive = TRUE, force = TRUE)
