@@ -7,3 +7,4 @@ Contributors
 ## List of Contributors & Reviewers
 - Ana Macedo
 - David Mota
+- Enrico Borghetto (https://github.com/borghenry)
