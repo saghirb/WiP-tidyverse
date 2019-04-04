@@ -24,6 +24,12 @@ You should be familiar with the `dplyr`, `tidyr` and `ggplot2` packages.
 guide.
 - [ggplot2](https://ggplot2.tidyverse.org/)
 
+## Cross References
+
+There is also a **`data.table` version** of this guide and repository available at:
+
++ [Women in Parliament: R `data.table` Case Study](https://github.com/saghirb/WiP-rdatatable).
+
 ## Repository Annoucement, etc.
 
 * https://twitter.com/ilustat/status/1108393635446435842
