@@ -69,6 +69,7 @@ WP <- wip2 %>%
   gather(key=YearC, value=pctWiP,starts_with("X"),
          na.rm=TRUE) %>% 
   mutate(Year = parse_number(YearC),
+         # pctWiP = as.numeric(pctWiP),
          Ratio = (100-pctWiP)/pctWiP) %>% 
   select(Country, Code, Year, pctWiP, Ratio) %>% 
   arrange(Country, Year)
@@ -152,7 +153,7 @@ dWP <- cWP %>%
 dWP %>% select(Country, pctDiff)
 
 
-## ----decline5pct, fig.width=3.5, fig.height=2.5--------------------------
+## ----decline5pct, fig.width=3.5, fig.height=2.4--------------------------
 # Select the countries to plot
 dclpct <- dWP %>% 
   filter(!is.na(Continent) & pctDiff <= -5) %>% 

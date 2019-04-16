@@ -331,12 +331,14 @@ tail(names(wip2))
 
 We want to transform the data so that for each country the year (column) data becomes
 a row. At the same time we will remove the missing data (with the `na.rm` option). 
-We will also create a numeric `Year` variable and a `Ratio` of men to women in parliament.
+We will also create a numeric `Year` variable and a `Ratio` of men to women in 
+parliament[^pctWiPcharError].
 ```{r gatherWip2, collapse=TRUE, message=FALSE, warning=FALSE}
 WP <- wip2 %>% 
   gather(key=YearC, value=pctWiP,starts_with("X"),
          na.rm=TRUE) %>% 
   mutate(Year = parse_number(YearC),
+         # pctWiP = as.numeric(pctWiP),
          Ratio = (100-pctWiP)/pctWiP) %>% 
   select(Country, Code, Year, pctWiP, Ratio) %>% 
   arrange(Country, Year)
@@ -355,7 +357,7 @@ answer the following questions.
 - How do continents compare?
 - What are the global trends over time?
 
-## Exercise
+## Exercise - Without Programming
 
 - Which country do you think has the highest percentage of women in parliament? 
 - In each continent (i.e. Africa, Americas, Asia, Europe and Oceania), which country
@@ -423,7 +425,7 @@ WP %>%
 
 ### Interpretation
 
-Since 2012 Portugal has had more women in parliament than the European Union average. 
+Since 2007 Portugal has had more women in parliament than the European Union average. 
 Hungary and Romania both had a higher percentage of women in parliament in 1990 
 (around the end of the Cold War) than they have had since. The key point to note 
 is that none of these countries reaches equality between males and females in 
@@ -529,7 +531,7 @@ dWP %>% select(Country, pctDiff)
 We will plot the trend lines for countries with at least a 5% decline. Note that the
 "5%" is arbitrarily selected.
 
-```{r decline5pct, fig.width=3.5, fig.height=2.5}
+```{r decline5pct, fig.width=3.5, fig.height=2.4}
 # Select the countries to plot
 dclpct <- dWP %>% 
   filter(!is.na(Continent) & pctDiff <= -5) %>% 
@@ -711,3 +713,5 @@ keep it per the World Bank data.
 [^WBinterpretation]: https://databank.worldbank.org/data/reports.aspx?source=2&type=metadata&series=SG.GEN.PARL.ZS.
 [^loadTidyverse]: We could have used `library(tidyverse)` but we prefer to load 
 packages individually and only those that we will use.
+[^pctWiPcharError]: Uncomment this line if the `gather()` functions gives you 
+character `pctWiP`.
