@@ -66,6 +66,11 @@ about and understanding the raw data, which we will then process
 % If your first paragraph (i.e. with the \dropcap) contains a list environment (quote, quotation, theorem, definition, enumerate, itemize...), the line after the list may have some extra indentation. If this is the case, add \parshape=0 to the end of the list environment.
 
 
+\begin{tikzpicture}[remember picture, overlay]
+    \node [shift={(-2cm,-2cm)}]  at (current page.north east)
+        {\includegraphics[width=2.5cm]{../images/Women_in_Parliament_hex.png}};
+\end{tikzpicture}
+
 \hypertarget{preface}{%
 \section{Preface}\label{preface}}
 
@@ -197,7 +202,7 @@ The data is stored in a file called:
 \begin{itemize}
 \tightlist
 \item
-  \texttt{API\_SG.GEN.PARL.ZS\_DS2\_en\_csv\_v2\_10515251.csv}
+  \texttt{API\_SG.GEN.PARL.ZS\_DS2\_en\_csv\_v2\_41121.csv}
 \end{itemize}
 
 To simplify things we have copied it to \texttt{WB-WiP.csv} (which also
@@ -227,7 +232,7 @@ two lines of meta-information and two blank lines, as follows:
 \begin{verbatim}
  1  ﻿"Data Source","World Development Indicators",
  2  
- 3  "Last Updated Date","2019-03-21",
+ 3  "Last Updated Date","2019-07-10",
  4  
 \end{verbatim}
 
@@ -430,7 +435,7 @@ parliament\footnote{Uncomment this line if the \texttt{gather()}
 \StringTok{  }\KeywordTok{arrange}\NormalTok{(Country, Year)}
 \CommentTok{# Look at the contents of WP}
 \KeywordTok{glimpse}\NormalTok{(WP)}
-\CommentTok{#  Observations: 5,110}
+\CommentTok{#  Observations: 5,109}
 \CommentTok{#  Variables: 5}
 \CommentTok{#  $ Country <chr> "Afghanistan", "Afghanis...}
 \CommentTok{#  $ Code    <chr> "AFG", "AFG", "AFG", "AF...}
@@ -1089,6 +1094,8 @@ World Bank has nicely
 \href{https://databank.worldbank.org/data/reports.aspx?source=2\&type=metadata\&series=SG.GEN.PARL.ZS\#}{summarised}.\footnote{\url{https://databank.worldbank.org/data/reports.aspx?source=2\&type=metadata\&series=SG.GEN.PARL.ZS}.}
 You are strongly encouraged to read their discussion for a more complete
 understanding.
+
+\begin{center}\includegraphics[width=1\linewidth]{/home/saghir/Documents/saghirb/Github/WiP-tidyverse/images/Women_in_Parliament_rect} \end{center}
 
 %\showmatmethods
 

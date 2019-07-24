@@ -241,3 +241,7 @@ cWP %>%
   ggtitle("Women in Parliament: Global Trends") +
   ylab("% Women in Parliament")
 
+
+## ----addWiPrect, echo=FALSE, out.width="100%"----------------------------
+include_graphics(here("images", "Women_in_Parliament_rect.png"))
+
