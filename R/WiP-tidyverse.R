@@ -48,7 +48,7 @@ head(names(wip))
 tail(names(wip))
 
 
-## head -n 5 ../data/WB-WiP.csv | tail -n -1 -c 31
+## head -n 5 ../data/WB-WiP.csv | tail -c 31
 
 
 ## ----checkX64, collapse=TRUE, message=FALSE, warning=FALSE---------------
@@ -228,13 +228,13 @@ cWPx %>%
 options(tibble.print.rownames=TRUE)
 
 
-## ----globalTrends, warning=FALSE, message=FALSE, fig.width=3, fig.height=2.5----
+## ----globalTrends, message=FALSE, fig.width=3, fig.height=2.5------------
 cWP %>% 
   filter(is.na(Continent)) %>%
   ggplot(aes(Year, pctWiP, group=Country)) +
   geom_line() +
   gghighlight(Country=="World", 
-              use_direct_label = FALSE) +
+              use_direct_label = FALSE, use_group_by = FALSE) +
   scale_x_continuous(breaks=seq(1990, 2020, 5)) +
   scale_y_continuous(limits=c(0, 40), 
                      breaks=seq(0, 40, by=10)) +

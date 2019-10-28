@@ -1,4 +1,4 @@
-\documentclass[a4paper,9pt,twocolumn,twoside,printwatermark=false]{pinp}
+\documentclass[a4paper,9pt,twocolumn,twoside,]{pinp}
 
 %% Some pieces required from the pandoc template
 \providecommand{\tightlist}{%
@@ -11,10 +11,9 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
-% The geometry package layout settings need to be set here...
+% pinp change: the geometry package layout settings need to be set here, not in pinp.cls
 \geometry{layoutsize={0.95588\paperwidth,0.98864\paperheight},%
-          layouthoffset=0.02206\paperwidth,%
-		  layoutvoffset=0.00568\paperheight}
+  layouthoffset=0.02206\paperwidth, layoutvoffset=0.00568\paperheight}
 
 \definecolor{pinpblue}{HTML}{185FAF}  % imagecolorpicker on blue for new R logo
 \definecolor{pnasbluetext}{RGB}{101,0,0} %
@@ -202,7 +201,7 @@ The data is stored in a file called:
 \begin{itemize}
 \tightlist
 \item
-  \texttt{API\_SG.GEN.PARL.ZS\_DS2\_en\_csv\_v2\_41121.csv}
+  \texttt{API\_SG.GEN.PARL.ZS\_DS2\_en\_csv\_v2\_382411.csv}
 \end{itemize}
 
 To simplify things we have copied it to \texttt{WB-WiP.csv} (which also
@@ -232,7 +231,7 @@ two lines of meta-information and two blank lines, as follows:
 \begin{verbatim}
  1  ﻿"Data Source","World Development Indicators",
  2  
- 3  "Last Updated Date","2019-07-10",
+ 3  "Last Updated Date","2019-10-16",
  4  
 \end{verbatim}
 
@@ -312,8 +311,8 @@ Some of the column names contain spaces while others are numeric:
 \end{Shaded}
 
 By using the \texttt{make.names()} function we don't need to use back
-ticks (\texttt{\textasciigrave{}}) around the column names (e.g.
-\texttt{\textasciigrave{}col\ name\textasciigrave{}}).
+ticks (\texttt{\textasciigrave{}}) around the column names
+(e.g.~\texttt{\textasciigrave{}col\ name\textasciigrave{}}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -709,7 +708,7 @@ year?
 \subsection{Merging continent}\label{merging-continent}}
 
 The variable \texttt{Country} in the \texttt{WP} dataset is a mix of
-countries and regions (e.g. ``European Union'', ``South Asia'' and
+countries and regions (e.g.~ ``European Union'', ``South Asia'' and
 ``World''). To present the highest percentages grouped by continent we
 need to add it. Luckily, given the large number of R packages available,
 we can merge the ``\texttt{continent}'' from the ``\texttt{codelist}''
@@ -1059,7 +1058,7 @@ World Bank data. We can plot them and highlight the world ``average''.
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year, pctWiP, }\DataTypeTok{group=}\NormalTok{Country)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{gghighlight}\NormalTok{(Country}\OperatorTok{==}\StringTok{"World"}\NormalTok{, }
-              \DataTypeTok{use_direct_label =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
+              \DataTypeTok{use_direct_label =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{use_group_by =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{1990}\NormalTok{, }\DecValTok{2020}\NormalTok{, }\DecValTok{5}\NormalTok{)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{40}\NormalTok{), }
                      \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DataTypeTok{by=}\DecValTok{10}\NormalTok{)) }\OperatorTok{+}
@@ -1095,7 +1094,7 @@ World Bank has nicely
 You are strongly encouraged to read their discussion for a more complete
 understanding.
 
-\begin{center}\includegraphics[width=1\linewidth]{/home/saghir/Documents/saghirb/Github/WiP-tidyverse/images/Women_in_Parliament_rect} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{/Users/andreia/Documents/repositories/WiP-tidyverse/images/Women_in_Parliament_rect} \end{center}
 
 %\showmatmethods
 
