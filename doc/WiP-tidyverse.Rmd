@@ -302,7 +302,7 @@ We will start by removing columns ``r tail(names(wip), n=1)``, `Indicator.Name` 
 Column ``r tail(names(wip), n=1)`` is created automatically due to an extra comma 
 at the end of the column names (fifth) line of `WB-WiP.csv`:
 ```{bash extraComma, echo=FALSE, comment="   ..."}
-head -n 5 ../data/WB-WiP.csv | tail -n -1 -c 31
+head -n 5 ../data/WB-WiP.csv | tail -c 31
 ```
 ## Check
 
@@ -675,13 +675,13 @@ options(tibble.print.rownames=TRUE)
 What are the trends globally? There are various regions defined in the World Bank
 data. We can plot them and highlight the world "average".
 
-```{r globalTrends, warning=FALSE, message=FALSE, fig.width=3, fig.height=2.5}
+```{r globalTrends, message=FALSE, fig.width=3, fig.height=2.5}
 cWP %>% 
   filter(is.na(Continent)) %>%
   ggplot(aes(Year, pctWiP, group=Country)) +
   geom_line() +
   gghighlight(Country=="World", 
-              use_direct_label = FALSE) +
+              use_direct_label = FALSE, use_group_by = FALSE) +
   scale_x_continuous(breaks=seq(1990, 2020, 5)) +
   scale_y_continuous(limits=c(0, 40), 
                      breaks=seq(0, 40, by=10)) +

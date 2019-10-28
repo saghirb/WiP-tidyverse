@@ -26,18 +26,26 @@ file.copy(here("data", WiPDataFile), here("data", "WB-WiP.csv"))
 rmarkdown::render(here("doc", "WiP-tidyverse.Rmd"))
 
 # Create an image for the README.md file
-  tempPNGs <- paste0("images/temp-", 1:2, ".png")
+  tempPNGs <- c(tempfile(), tempfile())
   pdf_convert(here("doc", "WiP-tidyverse.pdf"), "png", pages = 1:2,
             filenames = tempPNGs)
 
   img1 <- image_read(tempPNGs[1])
   img2 <- image_read(tempPNGs[2])
 
-  image_append(c(image_border(img1, geometry = "5x5"),
-               image_border(img2, geometry = "5x5"))) %>%
+  image_append(c(image_border(img1, geometry = "3x3"),
+               image_border(img2, geometry = "3x3"))) %>%
     image_write(.,path=here("images", "WiP-tv-guide.png"), format="png")
 
-  file.remove(tempPNGs)
+# Image for GitHub settings
+  ghTemp <- tempfile()
+  test <- pdf_convert(here("doc", "WiP-tidyverse.pdf"), "png", pages = 1, dpi = 155,
+                      filenames = ghTemp)
+
+  image_read(ghTemp) %>%
+    image_crop(geometry_area(1280, 640, 0, 0), repage = FALSE) %>%
+    image_write(., path=here("images", "WiPdt-GitHub.png"), format="png")
+
 
 # Extract the R code from Rmd file
 knitr::purl(here("doc", "WiP-tidyverse.Rmd"), output=here("R", "WiP-tidyverse.R"))
