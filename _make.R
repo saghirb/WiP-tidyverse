@@ -1,4 +1,4 @@
-## Run all files to prepare "Women in Parliament -- data.table"
+## Run all files to prepare "Women in Parliament -- tidyverse"
 
 # Setup
 library(here)
