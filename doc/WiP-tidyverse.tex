@@ -19,6 +19,20 @@
 \definecolor{pnasbluetext}{RGB}{101,0,0} %
 
 
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 
 \title{Women in Parliament -- Tidyverse Edition}
 
@@ -201,7 +215,7 @@ The data is stored in a file called:
 \begin{itemize}
 \tightlist
 \item
-  \texttt{API\_SG.GEN.PARL.ZS\_DS2\_en\_csv\_v2\_382411.csv}
+  \texttt{API\_SG.GEN.PARL.ZS\_DS2\_en\_csv\_v2\_511371.csv}
 \end{itemize}
 
 To simplify things we have copied it to \texttt{WB-WiP.csv} (which also
@@ -231,7 +245,7 @@ two lines of meta-information and two blank lines, as follows:
 \begin{verbatim}
  1  ﻿"Data Source","World Development Indicators",
  2  
- 3  "Last Updated Date","2019-10-16",
+ 3  "Last Updated Date","2019-10-28",
  4  
 \end{verbatim}
 
@@ -276,7 +290,7 @@ treat the fifth line as column (variable) names.
 \begin{ShadedResult}
 \begin{verbatim}
 #  Warning: Missing column names filled in:
-#  'X64' [64]
+#  'X65' [65]
 \end{verbatim}
 \end{ShadedResult}
 
@@ -284,7 +298,7 @@ treat the fifth line as column (variable) names.
 \subsubsection{Messages}\label{messages}}
 
 We have suppressed some of the messages but left the one about variable
-\texttt{X64} (we will come back to it below).
+\texttt{X65} (we will come back to it below).
 
 \hypertarget{exercise-1}{%
 \subsection{Exercise}\label{exercise-1}}
@@ -306,13 +320,13 @@ Some of the column names contain spaces while others are numeric:
 \CommentTok{#  [3] "Indicator Name" "Indicator Code"}
 \CommentTok{#  [5] "1960"           "1961"}
 \KeywordTok{tail}\NormalTok{(}\KeywordTok{names}\NormalTok{(wip))}
-\CommentTok{#  [1] "2014" "2015" "2016" "2017" "2018" "X64"}
+\CommentTok{#  [1] "2015" "2016" "2017" "2018" "2019" "X65"}
 \end{Highlighting}
 \end{Shaded}
 
 By using the \texttt{make.names()} function we don't need to use back
-ticks (\texttt{\textasciigrave{}}) around the column names
-(e.g.~\texttt{\textasciigrave{}col\ name\textasciigrave{}}).
+ticks (\texttt{\textasciigrave{}}) around the column names (e.g.
+\texttt{\textasciigrave{}col\ name\textasciigrave{}}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -322,8 +336,8 @@ ticks (\texttt{\textasciigrave{}}) around the column names
 \CommentTok{#  [3] "Indicator.Name" "Indicator.Code"}
 \CommentTok{#  [5] "X1960"          "X1961"}
 \KeywordTok{tail}\NormalTok{(}\KeywordTok{names}\NormalTok{(wip))}
-\CommentTok{#  [1] "X2014" "X2015" "X2016" "X2017" "X2018"}
-\CommentTok{#  [6] "X64"}
+\CommentTok{#  [1] "X2015" "X2016" "X2017" "X2018" "X2019"}
+\CommentTok{#  [6] "X65"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -331,7 +345,7 @@ ticks (\texttt{\textasciigrave{}}) around the column names
 \section{Data Wrangling Aims}\label{data-wrangling-aims}}
 
 We can simplify the production of summaries and plots by restructuring
-the current \texttt{wip} dataset (which has 64 columns) to the following
+the current \texttt{wip} dataset (which has 65 columns) to the following
 format:
 
 \begin{verbatim}
@@ -354,16 +368,16 @@ variable for the ratio of male to female MPs.
 \hypertarget{superfluous-columns}{%
 \subsection{Superfluous columns}\label{superfluous-columns}}
 
-We will start by removing columns \texttt{X64}, \texttt{Indicator.Name}
+We will start by removing columns \texttt{X65}, \texttt{Indicator.Name}
 and \texttt{Indicator.Code}. There are years without any data but they
 will be removed automatically later (when restructuring from ``wide'' to
 ``long'' format).
 
-Column \texttt{X64} is created automatically due to an extra comma at
+Column \texttt{X65} is created automatically due to an extra comma at
 the end of the column names (fifth) line of \texttt{WB-WiP.csv}:
 
 \begin{verbatim}
-   ... ,"2015","2016","2017","2018",
+   ... ,"2016","2017","2018","2019",
 \end{verbatim}
 
 \hypertarget{check}{%
@@ -373,7 +387,7 @@ Before removing it check that all values are \texttt{NA}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{wip }\OperatorTok{%>%}\StringTok{ }\KeywordTok{pull}\NormalTok{(X64) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{is.na}\NormalTok{(.) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{all}\NormalTok{(.)}
+\NormalTok{wip }\OperatorTok{%>%}\StringTok{ }\KeywordTok{pull}\NormalTok{(X65) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{is.na}\NormalTok{(.) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{all}\NormalTok{(.)}
 \CommentTok{#  [1] TRUE}
 \end{Highlighting}
 \end{Shaded}
@@ -393,7 +407,7 @@ have the same values for all observations. Hint: Use either
 \hypertarget{removing-columns}{%
 \subsection{Removing columns}\label{removing-columns}}
 
-The indicator and \texttt{X64} columns can be removed. We will also
+The indicator and \texttt{X65} columns can be removed. We will also
 rename ``\texttt{Country.Name}'' as ``\texttt{Country}'' and
 ``\texttt{Country.Code}'' as ``\texttt{Code}''.
 
@@ -401,14 +415,14 @@ rename ``\texttt{Country.Name}'' as ``\texttt{Country}'' and
 \begin{Highlighting}[]
 \NormalTok{wip2 <-}\StringTok{ }\NormalTok{wip }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{Indicator.Name, }\OperatorTok{-}\NormalTok{Indicator.Code, }
-         \OperatorTok{-}\NormalTok{X64) }\OperatorTok{%>%}\StringTok{ }
+         \OperatorTok{-}\NormalTok{X65) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{Country=}\NormalTok{Country.Name, }\DataTypeTok{Code=}\NormalTok{Country.Code)}
 \KeywordTok{head}\NormalTok{(}\KeywordTok{names}\NormalTok{(wip2))}
 \CommentTok{#  [1] "Country" "Code"    "X1960"   "X1961"  }
 \CommentTok{#  [5] "X1962"   "X1963"}
 \KeywordTok{tail}\NormalTok{(}\KeywordTok{names}\NormalTok{(wip2))}
-\CommentTok{#  [1] "X2013" "X2014" "X2015" "X2016" "X2017"}
-\CommentTok{#  [6] "X2018"}
+\CommentTok{#  [1] "X2014" "X2015" "X2016" "X2017" "X2018"}
+\CommentTok{#  [6] "X2019"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -708,7 +722,7 @@ year?
 \subsection{Merging continent}\label{merging-continent}}
 
 The variable \texttt{Country} in the \texttt{WP} dataset is a mix of
-countries and regions (e.g.~ ``European Union'', ``South Asia'' and
+countries and regions (e.g. ``European Union'', ``South Asia'' and
 ``World''). To present the highest percentages grouped by continent we
 need to add it. Luckily, given the large number of R packages available,
 we can merge the ``\texttt{continent}'' from the ``\texttt{codelist}''
@@ -1058,7 +1072,8 @@ World Bank data. We can plot them and highlight the world ``average''.
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year, pctWiP, }\DataTypeTok{group=}\NormalTok{Country)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{gghighlight}\NormalTok{(Country}\OperatorTok{==}\StringTok{"World"}\NormalTok{, }
-              \DataTypeTok{use_direct_label =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{use_group_by =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
+              \DataTypeTok{use_direct_label =} \OtherTok{FALSE}\NormalTok{, }
+              \DataTypeTok{use_group_by =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{1990}\NormalTok{, }\DecValTok{2020}\NormalTok{, }\DecValTok{5}\NormalTok{)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{40}\NormalTok{), }
                      \DataTypeTok{breaks=}\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DataTypeTok{by=}\DecValTok{10}\NormalTok{)) }\OperatorTok{+}
@@ -1094,7 +1109,7 @@ World Bank has nicely
 You are strongly encouraged to read their discussion for a more complete
 understanding.
 
-\begin{center}\includegraphics[width=1\linewidth]{/Users/andreia/Documents/repositories/WiP-tidyverse/images/Women_in_Parliament_rect} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{/home/saghir/Documents/saghirb/Github/WiP-tidyverse/images/Women_in_Parliament_rect} \end{center}
 
 %\showmatmethods
 

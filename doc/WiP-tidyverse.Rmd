@@ -251,7 +251,7 @@ wip <- read_csv(here("data", "WB-WiP.csv"),
 ```
 ### Messages
 
-We have suppressed some of the messages but left the one about variable `X64` (we 
+We have suppressed some of the messages but left the one about variable `X65` (we 
 will come back to it below).
 
 ## Exercise
@@ -307,8 +307,8 @@ head -n 5 ../data/WB-WiP.csv | tail -c 31
 ## Check
 
 Before removing it check that all values are `NA`.
-```{r checkX64, collapse=TRUE, message=FALSE, warning=FALSE}
-wip %>% pull(X64) %>% is.na(.) %>% all(.)
+```{r checkXnnNA, collapse=TRUE, message=FALSE, warning=FALSE}
+wip %>% pull(X65) %>% is.na(.) %>% all(.)
 ```
 Column `Indicator.Name` has the unique value _"`r unique(wip$Indicator.Name)`"_ 
 and in `Indicator.Code` it is _"`r unique(wip$Indicator.Code)`"_. 
@@ -326,7 +326,7 @@ rename "`Country.Name`" as "`Country`" and "`Country.Code`" as "`Code`".
 ```{r rmCols, collapse=TRUE}
 wip2 <- wip %>% 
   select(-Indicator.Name, -Indicator.Code, 
-         -X64) %>% 
+         -X65) %>% 
   rename(Country=Country.Name, Code=Country.Code)
 head(names(wip2))
 tail(names(wip2))
@@ -681,7 +681,8 @@ cWP %>%
   ggplot(aes(Year, pctWiP, group=Country)) +
   geom_line() +
   gghighlight(Country=="World", 
-              use_direct_label = FALSE, use_group_by = FALSE) +
+              use_direct_label = FALSE, 
+              use_group_by = FALSE) +
   scale_x_continuous(breaks=seq(1990, 2020, 5)) +
   scale_y_continuous(limits=c(0, 40), 
                      breaks=seq(0, 40, by=10)) +
