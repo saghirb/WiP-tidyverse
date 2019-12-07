@@ -34,6 +34,12 @@ There is also a **`data.table` version** of this guide and repository available 
 
 * https://twitter.com/ilustat/status/1108393635446435842
 
+### Images
+
+The "Women in Parliament" hex sticker and image are taken from the following repository:
+
+* https://github.com/saghirb/Women-in-Parliament-Hex-Sticker
+
 ## Acknowledgements
 
 Thanks to the `tidyverse` [team](https://github.com/orgs/tidyverse/people) and 
