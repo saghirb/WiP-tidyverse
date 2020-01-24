@@ -215,7 +215,7 @@ The data is stored in a file called:
 \begin{itemize}
 \tightlist
 \item
-  \texttt{API\_SG.GEN.PARL.ZS\_DS2\_en\_csv\_v2\_511371.csv}
+  \texttt{API\_SG.GEN.PARL.ZS\_DS2\_en\_csv\_v2\_713162.csv}
 \end{itemize}
 
 To simplify things we have copied it to \texttt{WB-WiP.csv} (which also
@@ -245,7 +245,7 @@ two lines of meta-information and two blank lines, as follows:
 \begin{verbatim}
  1  ﻿"Data Source","World Development Indicators",
  2  
- 3  "Last Updated Date","2019-10-28",
+ 3  "Last Updated Date","2019-12-20",
  4  
 \end{verbatim}
 
@@ -433,22 +433,22 @@ We want to transform the data so that for each country the year (column)
 data becomes a row. At the same time we will remove the missing data
 (with the \texttt{na.rm} option). We will also create a numeric
 \texttt{Year} variable and a \texttt{Ratio} of men to women in
-parliament\footnote{Uncomment this line if the \texttt{gather()}
-  functions gives you character \texttt{pctWiP}.}.
+parliament.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{WP <-}\StringTok{ }\NormalTok{wip2 }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{gather}\NormalTok{(}\DataTypeTok{key=}\NormalTok{YearC, }\DataTypeTok{value=}\NormalTok{pctWiP,}\KeywordTok{starts_with}\NormalTok{(}\StringTok{"X"}\NormalTok{),}
-         \DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{pivot_longer}\NormalTok{(}\KeywordTok{starts_with}\NormalTok{(}\StringTok{"X"}\NormalTok{), }
+               \DataTypeTok{names_to =} \StringTok{"YearC"}\NormalTok{, }
+               \DataTypeTok{values_to =} \StringTok{"pctWiP"}\NormalTok{, }
+               \DataTypeTok{values_drop_na =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Year =} \KeywordTok{parse_number}\NormalTok{(YearC),}
-         \CommentTok{# pctWiP = as.numeric(pctWiP),}
          \DataTypeTok{Ratio =}\NormalTok{ (}\DecValTok{100}\OperatorTok{-}\NormalTok{pctWiP)}\OperatorTok{/}\NormalTok{pctWiP) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{select}\NormalTok{(Country, Code, Year, pctWiP, Ratio) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{arrange}\NormalTok{(Country, Year)}
 \CommentTok{# Look at the contents of WP}
 \KeywordTok{glimpse}\NormalTok{(WP)}
-\CommentTok{#  Observations: 5,109}
+\CommentTok{#  Observations: 5,347}
 \CommentTok{#  Variables: 5}
 \CommentTok{#  $ Country <chr> "Afghanistan", "Afghanis...}
 \CommentTok{#  $ Code    <chr> "AFG", "AFG", "AFG", "AF...}
@@ -492,7 +492,7 @@ Programming}\label{exercise---without-programming}}
   In each continent (i.e.~Africa, Americas, Asia, Europe and Oceania),
   which country has the highest percentage of women in parliament?
 \item
-  What is the world percentage of women in parliament in 2018?
+  What is the world percentage of women in parliament in 2019?
 \end{itemize}
 
 \hypertarget{exploratory-analysis}{%
@@ -515,7 +515,7 @@ First look at the raw data.
 \CommentTok{# Reset tibble print option to see more rows}
 \KeywordTok{options}\NormalTok{(}\DataTypeTok{tibble.print_max =} \DecValTok{25}\NormalTok{)}
 \NormalTok{WP }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Country}\OperatorTok{==}\StringTok{"Portugal"}\NormalTok{)}
-\CommentTok{#  # A tibble: 23 x 5}
+\CommentTok{#  # A tibble: 24 x 5}
 \CommentTok{#     Country  Code   Year pctWiP Ratio}
 \CommentTok{#     <chr>    <chr> <dbl>  <dbl> <dbl>}
 \CommentTok{#   1 Portugal PRT    1990    7.6 12.2 }
@@ -541,6 +541,7 @@ First look at the raw data.
 \CommentTok{#  21 Portugal PRT    2016   34.8  1.87}
 \CommentTok{#  22 Portugal PRT    2017   34.8  1.87}
 \CommentTok{#  23 Portugal PRT    2018   34.8  1.87}
+\CommentTok{#  24 Portugal PRT    2019   35.6  1.81}
 \end{Highlighting}
 \end{Shaded}
 
@@ -663,10 +664,10 @@ A quick answer can be obtained by looking at the highest percentages.
 \CommentTok{#   4 Rwanda  RWA    2016   63.8 0.567}
 \CommentTok{#   5 Rwanda  RWA    2017   61.3 0.631}
 \CommentTok{#   6 Rwanda  RWA    2018   61.3 0.631}
-\CommentTok{#   7 Rwanda  RWA    2008   56.3 0.776}
-\CommentTok{#   8 Rwanda  RWA    2009   56.3 0.776}
-\CommentTok{#   9 Rwanda  RWA    2010   56.3 0.776}
-\CommentTok{#  10 Rwanda  RWA    2011   56.3 0.776}
+\CommentTok{#   7 Rwanda  RWA    2019   61.2 0.633}
+\CommentTok{#   8 Rwanda  RWA    2008   56.3 0.776}
+\CommentTok{#   9 Rwanda  RWA    2009   56.3 0.776}
+\CommentTok{#  10 Rwanda  RWA    2010   56.3 0.776}
 \end{Highlighting}
 \end{Shaded}
 
@@ -688,8 +689,8 @@ year?
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(Year) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{arrange}\NormalTok{(Year, }\OperatorTok{-}\NormalTok{pctWiP) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{filter}\NormalTok{(}\KeywordTok{row_number}\NormalTok{()}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
-\CommentTok{#  # A tibble: 23 x 5}
-\CommentTok{#  # Groups:   Year [23]}
+\CommentTok{#  # A tibble: 24 x 5}
+\CommentTok{#  # Groups:   Year [24]}
 \CommentTok{#     Country Code   Year pctWiP Ratio}
 \CommentTok{#     <chr>   <chr> <dbl>  <dbl> <dbl>}
 \CommentTok{#   1 Sweden  SWE    1990   38.4 1.60 }
@@ -715,6 +716,7 @@ year?
 \CommentTok{#  21 Rwanda  RWA    2016   63.8 0.567}
 \CommentTok{#  22 Rwanda  RWA    2017   61.3 0.631}
 \CommentTok{#  23 Rwanda  RWA    2018   61.3 0.631}
+\CommentTok{#  24 Rwanda  RWA    2019   61.2 0.633}
 \end{Highlighting}
 \end{Shaded}
 
@@ -794,23 +796,23 @@ measurement (not always 1990)?
 \CommentTok{#  # Groups:   Country [17]}
 \CommentTok{#     Country                   pctDiff}
 \CommentTok{#     <chr>                       <dbl>}
-\CommentTok{#   1 Armenia                   -17.5  }
-\CommentTok{#   2 Romania                   -13.7  }
-\CommentTok{#   3 Hungary                    -8.1  }
-\CommentTok{#   4 Mongolia                   -7.80 }
-\CommentTok{#   5 Guinea-Bissau              -6.3  }
-\CommentTok{#   6 Guyana                     -5    }
-\CommentTok{#   7 Korea, Dem. People’s Rep.  -4.8  }
-\CommentTok{#   8 Vanuatu                    -4.3  }
-\CommentTok{#   9 Yemen, Rep.                -4.1  }
-\CommentTok{#  10 Mali                       -3.40 }
-\CommentTok{#  11 Congo, Rep.                -3    }
-\CommentTok{#  12 Oman                       -1.2  }
-\CommentTok{#  13 Turkmenistan               -1.20 }
-\CommentTok{#  14 Haiti                      -1.1  }
-\CommentTok{#  15 Tuvalu                     -1    }
-\CommentTok{#  16 Albania                    -0.9  }
-\CommentTok{#  17 Maldives                   -0.400}
+\CommentTok{#   1 Romania                    -13.7 }
+\CommentTok{#   2 Armenia                    -11.4 }
+\CommentTok{#   3 Hungary                     -8.14}
+\CommentTok{#   4 Mongolia                    -7.79}
+\CommentTok{#   5 Guinea-Bissau               -6.27}
+\CommentTok{#   6 Guyana                      -5.02}
+\CommentTok{#   7 Vanuatu                     -4.3 }
+\CommentTok{#   8 Yemen, Rep.                 -3.77}
+\CommentTok{#   9 Korea, Dem. People’s Rep.   -3.49}
+\CommentTok{#  10 Congo, Rep.                 -3.04}
+\CommentTok{#  11 Mali                        -2.68}
+\CommentTok{#  12 Maldives                    -1.7 }
+\CommentTok{#  13 Tuvalu                      -1.45}
+\CommentTok{#  14 Oman                        -1.22}
+\CommentTok{#  15 Haiti                       -1.06}
+\CommentTok{#  16 Turkmenistan                -1   }
+\CommentTok{#  17 Nigeria                     -0.02}
 \end{Highlighting}
 \end{Shaded}
 
@@ -886,8 +888,8 @@ is included as it varies by year.
 \StringTok{  }\KeywordTok{select}\NormalTok{(Country, Year, pctWiP, Ratio, RankG, }
 \NormalTok{         TotalG) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{arrange}\NormalTok{(Year)}
-\CommentTok{#  # A tibble: 23 x 6}
-\CommentTok{#  # Groups:   Year [23]}
+\CommentTok{#  # A tibble: 24 x 6}
+\CommentTok{#  # Groups:   Year [24]}
 \CommentTok{#     Country   Year pctWiP Ratio RankG TotalG}
 \CommentTok{#     <chr>    <dbl>  <dbl> <dbl> <dbl>  <int>}
 \CommentTok{#   1 Portugal  1990    7.6 12.2   66      138}
@@ -913,6 +915,7 @@ is included as it varies by year.
 \CommentTok{#  21 Portugal  2016   34.8  1.87  27      191}
 \CommentTok{#  22 Portugal  2017   34.8  1.87  28      192}
 \CommentTok{#  23 Portugal  2018   34.8  1.87  29      192}
+\CommentTok{#  24 Portugal  2019   35.6  1.81  33      191}
 \end{Highlighting}
 \end{Shaded}
 
@@ -960,7 +963,7 @@ Europe}\label{portugals-ranking-in-europe}}
 \StringTok{  }\KeywordTok{select}\NormalTok{(Country, Year, pctWiP, Ratio, RankC, }
 \NormalTok{         TotalC) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{arrange}\NormalTok{(Year)}
-\CommentTok{#  # A tibble: 23 x 6}
+\CommentTok{#  # A tibble: 24 x 6}
 \CommentTok{#     Country   Year pctWiP Ratio RankC TotalC}
 \CommentTok{#     <chr>    <dbl>  <dbl> <dbl> <dbl>  <int>}
 \CommentTok{#   1 Portugal  1990    7.6 12.2   22       28}
@@ -986,6 +989,7 @@ Europe}\label{portugals-ranking-in-europe}}
 \CommentTok{#  21 Portugal  2016   34.8  1.87  11       43}
 \CommentTok{#  22 Portugal  2017   34.8  1.87  12       43}
 \CommentTok{#  23 Portugal  2018   34.8  1.87  12       43}
+\CommentTok{#  24 Portugal  2019   35.6  1.81  14       43}
 \end{Highlighting}
 \end{Shaded}
 

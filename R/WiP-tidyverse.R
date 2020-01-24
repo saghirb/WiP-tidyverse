@@ -1,5 +1,5 @@
 ## ----setup, include=FALSE------------------
-knitr::opts_chunk$set(echo = TRUE, eval = TRUE) #, knitr.table.format = 'latex')
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 library(data.table)
 library(ggplot2)
 library(knitr)
@@ -66,10 +66,11 @@ tail(names(wip2))
 
 ## ----gatherWip2, collapse=TRUE, message=FALSE, warning=FALSE----
 WP <- wip2 %>% 
-  gather(key=YearC, value=pctWiP,starts_with("X"),
-         na.rm=TRUE) %>% 
+  pivot_longer(starts_with("X"), 
+               names_to = "YearC", 
+               values_to = "pctWiP", 
+               values_drop_na = TRUE) %>% 
   mutate(Year = parse_number(YearC),
-         # pctWiP = as.numeric(pctWiP),
          Ratio = (100-pctWiP)/pctWiP) %>% 
   select(Country, Code, Year, pctWiP, Ratio) %>% 
   arrange(Country, Year)

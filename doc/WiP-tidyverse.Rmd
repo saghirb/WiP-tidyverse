@@ -95,7 +95,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = TRUE) #, knitr.table.format = 'latex')
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 library(data.table)
 library(ggplot2)
 library(knitr)
@@ -337,13 +337,14 @@ tail(names(wip2))
 We want to transform the data so that for each country the year (column) data becomes
 a row. At the same time we will remove the missing data (with the `na.rm` option). 
 We will also create a numeric `Year` variable and a `Ratio` of men to women in 
-parliament[^pctWiPcharError].
+parliament.
 ```{r gatherWip2, collapse=TRUE, message=FALSE, warning=FALSE}
 WP <- wip2 %>% 
-  gather(key=YearC, value=pctWiP,starts_with("X"),
-         na.rm=TRUE) %>% 
+  pivot_longer(starts_with("X"), 
+               names_to = "YearC", 
+               values_to = "pctWiP", 
+               values_drop_na = TRUE) %>% 
   mutate(Year = parse_number(YearC),
-         # pctWiP = as.numeric(pctWiP),
          Ratio = (100-pctWiP)/pctWiP) %>% 
   select(Country, Code, Year, pctWiP, Ratio) %>% 
   arrange(Country, Year)
@@ -722,5 +723,3 @@ keep it per the World Bank data.
 [^WBinterpretation]: https://databank.worldbank.org/data/reports.aspx?source=2&type=metadata&series=SG.GEN.PARL.ZS.
 [^loadTidyverse]: We could have used `library(tidyverse)` but we prefer to load 
 packages individually and only those that we will use.
-[^pctWiPcharError]: Uncomment this line if the `gather()` functions gives you 
-character `pctWiP`.
