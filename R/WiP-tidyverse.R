@@ -219,7 +219,7 @@ cWP %>%
   gghighlight(Country=="World", 
               use_direct_label = FALSE, 
               use_group_by = FALSE) +
-  scale_x_continuous(breaks=seq(1997, 2020, 5)) +
+  scale_x_continuous(breaks=seq(1995, 2020, 5)) +
   scale_y_continuous(limits=c(0, 40), 
                      breaks=seq(0, 40, by=10)) +
   ggtitle("Women in Parliament: Global Trends") +

@@ -654,7 +654,7 @@ cWP %>%
   gghighlight(Country=="World", 
               use_direct_label = FALSE, 
               use_group_by = FALSE) +
-  scale_x_continuous(breaks=seq(1997, 2020, 5)) +
+  scale_x_continuous(breaks=seq(1995, 2020, 5)) +
   scale_y_continuous(limits=c(0, 40), 
                      breaks=seq(0, 40, by=10)) +
   ggtitle("Women in Parliament: Global Trends") +
@@ -665,7 +665,7 @@ cWP %>%
 
 The grey lines show that regardless of how we define region the general trends
 are upwards. The "World" percentage (black line) increased between 1997 and 2020. 
-In 2020, women in parliament represented 24% (i.e. a ratio of 3.17 men to each woman), 
+In 2020, women in parliament represented 25% (i.e. a ratio of 3 men to each woman), 
 which is still less than half the level before gender parity can be claimed.
 
 # Conclusion
