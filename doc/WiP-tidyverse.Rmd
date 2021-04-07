@@ -402,8 +402,8 @@ WP %>%
 ### Interpretation
 
 In 1997 Portugal had 13% women in parliament (i.e. 6.67 men for each woman), which 
-increased to 40% (i.e. 1.5 men for each woman) in 2020. This still falls short 
-of 50% (i.e. point of gender parity in parliament).
+increased to 40% (i.e. 1.5 men for each woman) in 2020. This falls short of 50%, i.e.,
+the point of gender parity in parliament).
 
 ## Exercise 
 
@@ -618,8 +618,8 @@ cWPx %>%
 ### Interpretation
 
 A total of `r nrow(filter(cWPx, Continent=="Europe" & Year==1997))` European countries 
-had data in 1997, `r nrow(filter(cWPx, Continent=="Europe" & Year==1997))` in 1997 
-and `r nrow(filter(cWPx, Continent=="Europe" & Year==2020))` in 2020. Within Europe, 
+had data in 1997 and `r nrow(filter(cWPx, Continent=="Europe" & Year==2020))` in 2020. 
+Within Europe, 
 Portugal was typically ranked in the second quartile (25-50%) with the fluctuations 
 of its ranking most likely due to random variation.
 
