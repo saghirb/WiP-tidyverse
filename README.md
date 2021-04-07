@@ -2,7 +2,7 @@
 
 ## Women in Parliament: R `tidyverse` Case Study
 
-A [six (and a bit) page guide](https://github.com/saghirb/WiP-tidyverse/blob/master/doc/WiP-tidyverse.pdf) 
+A [six page guide](https://github.com/saghirb/WiP-tidyverse/blob/master/doc/WiP-tidyverse.pdf) 
 presenting a [`tidyverse`](https://www.tidyverse.org/) case study using the [World Bank's](https://www.worldbank.org/) 
 ["Women in Parliament"](https://data.worldbank.org/indicator/SG.GEN.PARL.ZS) data.
 
