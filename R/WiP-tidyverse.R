@@ -52,13 +52,13 @@ tail(names(wip))
 
 
 ## ----checkXnnNA, collapse=TRUE, message=FALSE, warning=FALSE----
-wip %>% pull(X65) %>% is.na(.) %>% all(.)
+wip %>% pull(X66) %>% is.na(.) %>% all(.)
 
 
 ## ----rmCols, collapse=TRUE-----------------
 wip2 <- wip %>% 
   select(-Indicator.Name, -Indicator.Code, 
-         -X65) %>% 
+         -X66) %>% 
   rename(Country=Country.Name, Code=Country.Code)
 head(names(wip2))
 tail(names(wip2))
@@ -101,7 +101,7 @@ WP %>%
   ggplot(aes(Year, pctWiP, colour=Country)) +
   geom_line() +
   geom_point() +
-  scale_x_continuous(breaks=seq(1990, 2020, 5)) +
+  scale_x_continuous(breaks=seq(1995, 2020, 5)) +
   scale_y_continuous(limits=c(0, 50), 
                      breaks=seq(0, 50, by=10)) +
   ggtitle("Women in Parliament: EU Countries") +
@@ -134,7 +134,7 @@ cWP <- WP %>%
 
 ## ----allTopPctYearContinent, collapse=TRUE----
 cWP %>% 
-  filter(Year %in% c(1990, 2018) & 
+  filter(Year %in% c(1997, 2020) & 
            !is.na(Continent)) %>% 
   group_by(Continent, Year) %>% 
   arrange(Continent, Year, -pctWiP) %>% 
@@ -152,24 +152,6 @@ dWP <- cWP %>%
   filter(pctDiff<0  & !is.na(Continent)) %>% 
   arrange(pctDiff)
 dWP %>% select(Country, pctDiff)
-
-
-## ----decline5pct, fig.width=3.5, fig.height=2.4----
-# Select the countries to plot
-dclpct <- dWP %>% 
-  filter(!is.na(Continent) & pctDiff <= -5) %>% 
-  pull(Country)
-
-WP %>%
-  filter(Country %in% dclpct) %>% 
-  ggplot(aes(Year, pctWiP, colour=Country)) +
-  geom_line() +
-  geom_point() +
-  scale_x_continuous(breaks=seq(1990, 2020, 5)) +
-  scale_y_continuous(limits=c(0, 40),
-  breaks=seq(0, 40, by=10)) +
-  ggtitle("Women in Parliament: Decline >=5%") +
-  ylab("% Women in Parliament")
 
 
 ## ----globalRank , collapse=TRUE------------
@@ -213,7 +195,7 @@ cWPx %>%
   ggplot(aes(Year, RankC, colour=Country)) +
   geom_line() +
   geom_point() +
-  scale_x_continuous(breaks=seq(1990, 2020, 5)) +
+  scale_x_continuous(breaks=seq(1995, 2020, 5)) +
   scale_y_continuous(limits=c(0, 45), 
                      breaks=seq(0, 45, by=10)) +
   ggtitle("Women in Parliament: Ranked") +
@@ -223,7 +205,7 @@ cWPx %>%
 ## ----allTopRankYearContinent, collapse=TRUE, echo=2----
 options(tibble.print.rownames=FALSE)
 cWPx %>% 
-  filter(Year %in% c(1990, 2018) & RankC==1) %>% 
+  filter(Year %in% c(1997, 2020) & RankC==1) %>% 
   arrange(Continent, Year) %>% 
   select(Continent, Year, Country, pctWiP, Ratio) 
 options(tibble.print.rownames=TRUE)
@@ -237,7 +219,7 @@ cWP %>%
   gghighlight(Country=="World", 
               use_direct_label = FALSE, 
               use_group_by = FALSE) +
-  scale_x_continuous(breaks=seq(1990, 2020, 5)) +
+  scale_x_continuous(breaks=seq(1997, 2020, 5)) +
   scale_y_continuous(limits=c(0, 40), 
                      breaks=seq(0, 40, by=10)) +
   ggtitle("Women in Parliament: Global Trends") +
